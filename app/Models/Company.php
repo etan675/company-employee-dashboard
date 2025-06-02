@@ -12,4 +12,9 @@ class Company extends Model
         'email',
         'address'
     ];
+
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
 }
