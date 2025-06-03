@@ -4,7 +4,8 @@ import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 
 defineProps<{
-    companiesCount: number
+    companiesCount: number,
+    employeesCount: number
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -19,10 +20,9 @@ const breadcrumbs: BreadcrumbItem[] = [
     <Head title="Dashboard" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-            <div class="text-lg">
-                Total Companies: {{ companiesCount }}
-            </div>
+        <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 text-lg">
+            <div>Total Companies: {{ companiesCount }}</div>
+            <div>Total Employees: {{ employeesCount }}</div>
         </div>
     </AppLayout>
 </template>
