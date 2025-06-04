@@ -36,4 +36,21 @@ export interface User {
     updated_at: string;
 }
 
+export interface Company {
+    id: number,
+    name: string,
+    abn: string,
+    email: string,
+    address: string,
+    employees: Employee[]
+};
+export interface Employee {
+    id: number,
+    firstName: string,
+    lastName: string,
+    email: string,
+    address: string,
+    companyId: number
+}
+
 export type BreadcrumbItemType = BreadcrumbItem;

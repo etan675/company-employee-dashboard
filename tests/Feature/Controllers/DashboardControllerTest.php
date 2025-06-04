@@ -22,9 +22,20 @@ class DashboardControllerTest extends TestCase
         $companiesCount = 5;
         $employeesCount = 10;
 
-        $this->mock(CompanyServiceInterface::class, fn (MockInterface $mock) =>
-            $mock->expects('getTotalCompaniesCount')->andReturn($companiesCount)
-        );
+        // fake companies data
+        $companies = [
+            ['name' => 'Company 1'],
+            ['name' => 'Company 2'],
+            ['name' => 'Company 3'],
+            ['name' => 'Company 4'],
+            ['name' => 'Company 5'],
+        ];
+
+        $this->mock(CompanyServiceInterface::class, function (MockInterface $mock) use ($companiesCount, $companies) {
+            $mock->expects('getTotalCompaniesCount')->andReturn($companiesCount);
+            $mock->expects('getAllCompanies')->andReturn($companies);
+        });
+
         $this->mock(EmployeeServiceInterface::class, fn (MockInterface $mock) =>
             $mock->expects('getTotalEmployeesCount')->andReturn($employeesCount)
         );
@@ -34,6 +45,7 @@ class DashboardControllerTest extends TestCase
             $page->component('Dashboard')
                 ->where('companiesCount', $companiesCount)
                 ->where('employeesCount', $employeesCount)
+                ->where('companies', $companies)
         );
     }
 }

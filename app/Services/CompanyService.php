@@ -10,11 +10,11 @@ class CompanyService implements CompanyServiceInterface
     /**
      * Get all companies with their employees.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return array
      */
     public function getAllCompanies()
     {
-        return Company::with('employees')->get();
+        return Company::with('employees')->get()->toArray();
     }
 
     /**

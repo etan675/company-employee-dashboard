@@ -24,10 +24,12 @@ class DashboardController extends Controller
     {
         $companiesCount = $this->companyService->getTotalCompaniesCount();
         $employeesCount = $this->employeeService->getTotalEmployeesCount();
+        $companies = $this->companyService->getAllCompanies();
 
         return Inertia::render('Dashboard', [
             'companiesCount' => $companiesCount,
             'employeesCount' => $employeesCount,
+            'companies' => $companies
         ]);
     }
 }
