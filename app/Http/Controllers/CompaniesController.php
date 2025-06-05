@@ -34,4 +34,9 @@ class CompaniesController extends Controller
     {
         return Inertia::render('CreateCompany');
     }
+
+    public function edit(string $id)
+    {
+        return Inertia::render('EditCompany');
+    }
 }

@@ -33,8 +33,8 @@ import { Head, Link } from '@inertiajs/vue3';
                 </template>
             </nav>
         </header>
-        <h1 class="text-[#fff]">
-            WELCOME!
+        <h1 class="text-[#1b1b18] dark:text-[#EDEDEC]">
+            Welcome to AdminFlow!
         </h1>
     </div>
 </template>

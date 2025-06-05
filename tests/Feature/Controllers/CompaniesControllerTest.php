@@ -50,12 +50,23 @@ class CompaniesControllerTest extends TestCase
         $response->assertRedirect('/dashboard');
     }
 
-    public function test_create_company_page()
+    public function test_create_company_page_exists()
     {
         $user = User::factory()->create();
         $this->actingAs($user);
 
         $response = $this->get('/companies/new');
+        $response->assertStatus(200);
+    }
+
+    public function test_edit_company_page_exists()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $company = Company::factory()->create(['id' => 1]);
+
+        $response = $this->get('/companies/1/edit');
         $response->assertStatus(200);
     }
 }
