@@ -21,9 +21,7 @@ class CompaniesControllerTest extends TestCase
 
         $company = Company::factory()
             ->has(Employee::factory()->count(2), 'employees')
-            ->create([
-                'id' => 1,
-            ]);
+            ->create();
         $company->load('employees');
 
         $response = $this->get('/companies/1');
@@ -56,17 +54,6 @@ class CompaniesControllerTest extends TestCase
         $this->actingAs($user);
 
         $response = $this->get('/companies/new');
-        $response->assertStatus(200);
-    }
-
-    public function test_edit_company_page_exists()
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
-        $company = Company::factory()->create(['id' => 1]);
-
-        $response = $this->get('/companies/1/edit');
         $response->assertStatus(200);
     }
 
@@ -105,5 +92,23 @@ class CompaniesControllerTest extends TestCase
         $response->assertSessionHasErrors(['name', 'abn', 'email']);
         $response->assertStatus(302);
         $response->assertRedirect();
+    }
+
+    public function test_edit_company_page_receives_company_data()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $company = Company::factory()->create();
+
+        $response = $this->get('/companies/1/edit');
+        $response->assertStatus(200);
+
+        $response->assertInertia(fn (AssertableInertia $page) =>
+            $page->component('EditCompany')
+                ->has('company', null, fn (AssertableInertia $company) => 
+                    $company->hasAll(['id', 'name', 'abn', 'email', 'address', 'employees'])
+                )
+        );
     }
 }
