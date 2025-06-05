@@ -3,10 +3,9 @@
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome');
+    return redirect()->route('dashboard');
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
