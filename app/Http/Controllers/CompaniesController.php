@@ -29,4 +29,9 @@ class CompaniesController extends Controller
             'company' => new CompanyResource($company)
         ]);
     }
+
+    public function create()
+    {
+        return Inertia::render('CreateCompany');
+    }
 }

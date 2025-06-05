@@ -49,4 +49,13 @@ class CompaniesControllerTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect('/dashboard');
     }
+
+    public function test_create_company_page()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get('/companies/new');
+        $response->assertStatus(200);
+    }
 }

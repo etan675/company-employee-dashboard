@@ -30,9 +30,8 @@ const breadcrumbs: BreadcrumbItem[] = [
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col items-start gap-4 py-4 px-8">
             <h1 class="text-xl font-bold">Company Details</h1>
-            <!-- TODO: edit company page -->
             <Link 
-                :href="``"
+                :href="`/companies/${company.id}/edit`"
                 class="bg-blue-500 text-white px-4 py-2 text-sm rounded-lg hover:bg-blue-600"
             >
                 Edit
@@ -59,7 +58,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <span class="text-sm text-gray-500 ml-1">(Click an employee name to view details)</span>
                 </h2>
                 <Link 
-                    :href="``"
+                    :href="`/companies/${company.id}/employees/new`"
                     class="bg-blue-500 text-white px-4 py-2 text-sm rounded-lg hover:bg-blue-600"
                 >
                     Create New

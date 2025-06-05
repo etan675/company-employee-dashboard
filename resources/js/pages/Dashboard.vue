@@ -30,9 +30,8 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <span class="font-semibold">Companies List</span>
                     <span class="text-sm text-gray-500 ml-1">(Click a company name to view details)</span>
                 </h2>
-                <!-- TODO: link to create company page -->
                 <Link 
-                    :href="``"
+                    :href="'/companies/new'"
                     class="bg-blue-500 text-white px-4 py-2 text-sm rounded-lg hover:bg-blue-600"
                 >
                     Create New
