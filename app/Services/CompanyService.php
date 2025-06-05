@@ -26,4 +26,16 @@ class CompanyService implements CompanyServiceInterface
     {
         return Company::count();
     }
+
+    /**
+     * Get a company (with its employees) by its ID.
+     * 
+     * @param int $id
+     * 
+     * @return \App\Models\Company|null
+     */
+    public function getCompanyById(int $id)
+    {
+        return Company::with('employees')->find($id);
+    }
 }

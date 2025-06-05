@@ -2,20 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CompanyResource;
+use App\Models\Company;
+use App\Services\Interfaces\CompanyServiceInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CompaniesController extends Controller
 {
-    public function __construct()
+    private CompanyServiceInterface $companyService;
+
+    public function __construct(CompanyServiceInterface $companyService)
     {
-        // register services
+        $this->companyService = $companyService;
     }
 
-    public function index()
+    public function show(string $id)
     {
-        return Inertia::render('Companies', [
-            // pass props
+        $company = $this->companyService->getCompanyById($id);
+
+        if (!$company) {
+            return redirect()->route('dashboard')->with('error', 'Company not found');
+        }
+
+        return Inertia::render('CompanyDetails', [
+            'company' => new CompanyResource($company)
         ]);
     }
 }

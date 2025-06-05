@@ -21,33 +21,31 @@ class DashboardControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $this->actingAs($user);
-        $companiesCount = 5;
-        $employeesPerCompany = 2;
-        $employeesCount = 10;
 
         $companies = Company::factory()
-            ->has(Employee::factory()->count($employeesPerCompany), 'employees')
-            ->count($companiesCount)
+            ->has(Employee::factory()->count(2), 'employees')
+            ->count(2)
             ->create();
         $companies->load('employees');
 
-        $this->mock(CompanyServiceInterface::class, function (MockInterface $mock) use ($companiesCount, $companies) {
-            $mock->expects('getTotalCompaniesCount')->andReturn($companiesCount);
+        $this->mock(CompanyServiceInterface::class, function (MockInterface $mock) use ($companies) {
+            $mock->expects('getTotalCompaniesCount')->andReturn(2);
             $mock->expects('getAllCompanies')->andReturn($companies);
         });
 
         $this->mock(EmployeeServiceInterface::class, fn (MockInterface $mock) =>
-            $mock->expects('getTotalEmployeesCount')->andReturn($employeesCount)
+            $mock->expects('getTotalEmployeesCount')->andReturn(4)
         );
 
         $response = $this->get('/dashboard');
 
         $response->assertInertia(fn (AssertableInertia $page) => 
             $page->component('Dashboard')
-                ->where('companiesCount', $companiesCount)
-                ->where('employeesCount', $employeesCount)
-                ->has('companies.data', $companiesCount, function (AssertableInertia $company) {
-                    $company->has('employees', 2)->etc();
+                ->where('companiesCount', 2)
+                ->where('employeesCount', 4)
+                ->has('companies.data', 2, function (AssertableInertia $company) {
+                    $company->has('employees', 2);
+                    $company->has('name')->etc();
                 })
         );
     }

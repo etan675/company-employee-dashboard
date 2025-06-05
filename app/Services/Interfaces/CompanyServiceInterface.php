@@ -17,4 +17,13 @@ interface CompanyServiceInterface
      * @return int
      */
     public function getTotalCompaniesCount();
+
+    /**
+     * Get a company by its ID.
+     *
+     * @param int $id
+     * 
+     * @return \App\Models\Company|null
+     */
+    public function getCompanyById(int $id);
 }
