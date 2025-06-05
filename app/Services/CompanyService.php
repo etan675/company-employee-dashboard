@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Company;
 use App\Services\Interfaces\CompanyServiceInterface;
+use Exception;
 
 class CompanyService implements CompanyServiceInterface
 {
@@ -37,5 +38,21 @@ class CompanyService implements CompanyServiceInterface
     public function getCompanyById(int $id)
     {
         return Company::with('employees')->find($id);
+    }
+
+    /**
+     * Create a new company.
+     * 
+     * @param array $fields
+     * 
+     * @return \App\Models\Company|null
+     */
+    public function createCompany(array $fields)
+    {
+        try {
+            return Company::create($fields);
+        } catch (Exception $e) {
+            return null;
+        }
     }
 }

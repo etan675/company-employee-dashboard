@@ -36,4 +36,26 @@ class CompanyServiceTest extends TestCase
         $this->assertCount(1, $companies);
         $this->assertCount(2, $companies->first()->employees);
     }
+
+    public function test_create_company_inserts_to_database_correctly()
+    {
+        $newCompanyData = [
+            'name' => 'test company 1',
+            'abn' => '0123456789',
+            'email' => 'contact@testcompany1.com',
+            'address' => '123 Test St',
+        ];
+
+        $created = $this->companyService->createCompany($newCompanyData);
+        $created2 = $this->companyService->createCompany($newCompanyData);
+
+        $this->assertDatabaseHas('companies', [
+            'id' => $created->id,
+            'name' => $newCompanyData['name'],
+            'abn' => $newCompanyData['abn'],
+            'email' => $newCompanyData['email'],
+            'address' => $newCompanyData['address'],
+        ]);
+        $this->assertEquals($created2, null, 'failed insert should return null');
+    }
 }

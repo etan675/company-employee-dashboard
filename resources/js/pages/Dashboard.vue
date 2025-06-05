@@ -22,7 +22,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 <template>
     <Head title="Dashboard" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col gap-6 p-4">
+        <div class="flex h-full flex-1 flex-col gap-6 p-8">
             <div class="font-semibold">Total Companies: {{ companiesCount }}</div>
             <div class="font-semibold">Total Employees: {{ employeesCount }}</div>
             <div class="flex flex-col gap-4 items-start">

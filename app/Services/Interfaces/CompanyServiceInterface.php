@@ -26,4 +26,13 @@ interface CompanyServiceInterface
      * @return \App\Models\Company|null
      */
     public function getCompanyById(int $id);
+
+    /**
+     * Create a new company.
+     *
+     * @param array $fields
+     * 
+     * @return \App\Models\Company|null
+     */
+    public function createCompany(array $fields);
 }

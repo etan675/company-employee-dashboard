@@ -28,7 +28,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 <template>
     <Head :title="company.name" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col items-start gap-4 py-4 px-8">
+        <div class="flex h-full flex-1 flex-col items-start gap-4 p-8">
             <h1 class="text-xl font-bold">Company Details</h1>
             <Link 
                 :href="`/companies/${company.id}/edit`"

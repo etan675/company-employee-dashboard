@@ -10,7 +10,10 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('companies/new', [CompaniesController::class, 'create'])->name('companies.create');
+    Route::post('companies', [CompaniesController::class, 'store'])->name('companies.store');
+    
     Route::get('companies/{id}', [CompaniesController::class, 'show'])->name('companies.show');
     Route::get('companies/{id}/edit', [CompaniesController::class, 'edit'])->name('companies.edit');
 });

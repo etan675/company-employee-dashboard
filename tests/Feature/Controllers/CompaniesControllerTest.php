@@ -69,4 +69,41 @@ class CompaniesControllerTest extends TestCase
         $response = $this->get('/companies/1/edit');
         $response->assertStatus(200);
     }
+
+    public function test_store_valid_record_redirects_to_company_details()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $requestData = [
+            'name' => 'test company 1',
+            'abn' => '123456789',
+            'email' => 'contact@testcompany1.com',
+            'address' => '123 Test St',
+        ];
+
+        $response = $this->post('/companies', $requestData);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/companies/1');
+    }
+
+    public function test_store_invalid_record_has_validation_errors_and_redirects()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        Company::factory()->create(['abn' => '1234']);
+        $requestData = [
+            'name' => '',
+            'abn' => '1234',
+            'email' => 'invalid email',
+        ];
+
+        $response = $this->post('/companies', $requestData);
+
+        $response->assertSessionHasErrors(['name', 'abn', 'email']);
+        $response->assertStatus(302);
+        $response->assertRedirect();
+    }
 }

@@ -35,6 +35,20 @@ class CompaniesController extends Controller
         return Inertia::render('CreateCompany');
     }
 
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => ['required', 'string'],
+            'abn' => ['required', 'string', 'unique:companies,abn'],
+            'email' => ['required', 'email', 'unique:companies,email'],
+            'address' => ['nullable', 'string'],
+        ]);
+
+        $company = $this->companyService->createCompany($validatedData);
+
+        return redirect()->route('companies.show', ['id' => $company->id]);
+    }
+
     public function edit(string $id)
     {
         return Inertia::render('EditCompany');
