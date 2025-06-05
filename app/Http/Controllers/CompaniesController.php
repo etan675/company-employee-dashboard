@@ -18,7 +18,7 @@ class CompaniesController extends Controller
 
     public function show(string $id)
     {
-        $company = $this->companyService->getCompanyById($id);
+        $company = $this->companyService->getCompanyById((int) $id);
 
         if (!$company) {
             return redirect()->route('dashboard')->with('error', 'Company not found');
@@ -50,7 +50,7 @@ class CompaniesController extends Controller
 
     public function edit(string $id)
     {
-        $company = $this->companyService->getCompanyById($id);
+        $company = $this->companyService->getCompanyById((int) $id);
 
         if (!$company) {
             return redirect()->route('dashboard')->with('error', 'Company not found');
@@ -59,5 +59,23 @@ class CompaniesController extends Controller
         return Inertia::render('EditCompany', [
             'company' => new CompanyResource($company)
         ]);
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $validatedData = $request->validate([
+            'name' => ['nullable', 'string'],
+            'abn' => ['nullable', 'string'],
+            'email' => ['nullable', 'email'],
+            'address' => ['nullable', 'string'],
+        ]);
+        
+        $updated = $this->companyService->editCompany((int) $id, $validatedData);
+
+        if (!$updated) {   
+            return redirect()->route('companies.show', ['id' => $id])->with('error', 'update failed');
+        }
+
+        return redirect()->route('companies.show', ['id' => $id]);
     }
 }

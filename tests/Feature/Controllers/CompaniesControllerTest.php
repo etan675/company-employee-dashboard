@@ -5,9 +5,11 @@ namespace Tests\Feature;
 use App\Models\Company;
 use App\Models\Employee;
 use App\Models\User;
+use App\Services\Interfaces\CompanyServiceInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Inertia\Testing\AssertableInertia;
+use Mockery\MockInterface;
 use Tests\TestCase;
 
 class CompaniesControllerTest extends TestCase
@@ -110,5 +112,29 @@ class CompaniesControllerTest extends TestCase
                     $company->hasAll(['id', 'name', 'abn', 'email', 'address', 'employees'])
                 )
         );
+    }
+
+    public function test_update_company_success_redirects_to_company_details()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        Company::factory()->create(['name' => 'company 1']);
+
+        $requestData = [
+            'name' => 'test company 1'
+        ];
+
+        $this->mock(CompanyServiceInterface::class, function (MockInterface $mock) use ($requestData) {
+            $mock->expects('editCompany')
+                ->with(1, $requestData)
+                ->andReturn(new Company([
+                    'name' => 'test company 1'   
+                ]));
+        });
+
+        $response = $this->patch('/companies/1', $requestData);
+        $response->assertStatus(302);
+        $response->assertRedirect('/companies/1');
     }
 }

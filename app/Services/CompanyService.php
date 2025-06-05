@@ -55,4 +55,29 @@ class CompanyService implements CompanyServiceInterface
             return null;
         }
     }
+
+    /**
+     * Edit a company's fields.
+     *
+     * @param array $updateFields
+     * 
+     * @return \App\Models\Company|null
+     */
+    public function editCompany(int $id, array $updateFields)
+    {
+        $company = $this->getCompanyById($id);
+        
+        if (!$company) {
+            return null;
+        }
+
+        try {
+            $company->fill($updateFields);
+            $company->save();
+
+            return $company->fresh(['employees']);
+        } catch (Exception $e) {
+            return null;
+        }
+    }
 }

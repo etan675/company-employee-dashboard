@@ -50,7 +50,7 @@ const breadcrumbs: BreadcrumbItem[] = [
             </div>
             <div>
                 <span class="font-semibold">Address:</span>
-                <span class="ml-2">{{ company.name }}</span>
+                <span class="ml-2">{{ company.address }}</span>
             </div>
             <div class="flex flex-col gap-4 items-start">
                 <h2>

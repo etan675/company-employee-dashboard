@@ -35,4 +35,13 @@ interface CompanyServiceInterface
      * @return \App\Models\Company|null
      */
     public function createCompany(array $fields);
+
+    /**
+     * Edit a company's fields.
+     *
+     * @param array $updateFields
+     * 
+     * @return \App\Models\Company|null
+     */
+    public function editCompany(int $id, array $updateFields);
 }

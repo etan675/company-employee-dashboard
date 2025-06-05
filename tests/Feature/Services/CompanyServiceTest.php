@@ -58,4 +58,27 @@ class CompanyServiceTest extends TestCase
         ]);
         $this->assertEquals($created2, null, 'failed insert should return null');
     }
+
+    public function test_edit_company_updates_database_correctly()
+    {
+        $c1 = Company::factory()->create([
+            'name' => 'company 1',
+            'abn' => '1234',
+            'email' => 'contact@company1.com'
+        ]);
+        $c2 = Company::factory()->create([
+            'name' => 'company 2',
+            'abn' => '1235',
+            'email' => 'contact@company2.com'
+        ]);
+
+        $updateFields = ['name' => 'test company 1'];
+        $updateFieldsDuplicate = ['abn' => '1235'];
+
+        $updated = $this->companyService->editCompany($c1->id, $updateFields);
+        $updated2 = $this->companyService->editCompany($c1->id, $updateFieldsDuplicate);
+
+        $this->assertEquals($updated->name, $updateFields['name'], 'company name is updated');
+        $this->assertEquals($updated2, null, 'duplicate abn should fail and return null');
+    }
 }
