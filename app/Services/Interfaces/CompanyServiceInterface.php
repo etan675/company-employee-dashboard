@@ -7,7 +7,7 @@ interface CompanyServiceInterface
     /**
      * Get all companies with their employees.
      *
-     * @return array
+     * @return Illuminate\Database\Eloquent\Collection
      */
     public function getAllCompanies();
 

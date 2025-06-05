@@ -33,9 +33,7 @@ class CompanyServiceTest extends TestCase
         Company::factory()->has(Employee::factory()->count(2))->create();
         $companies = $this->companyService->getAllCompanies();
 
-        dump($companies);
-
         $this->assertCount(1, $companies);
-        $this->assertCount(2, $companies[0]['employees']);
+        $this->assertCount(2, $companies->first()->employees);
     }
 }

@@ -6,7 +6,9 @@ import { Head, Link } from '@inertiajs/vue3';
 defineProps<{
     companiesCount: number,
     employeesCount: number,
-    companies: Company[]
+    companies: {
+        data: Company[],
+    }
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -25,14 +27,23 @@ const breadcrumbs: BreadcrumbItem[] = [
             <div class="font-semibold">Total Companies: {{ companiesCount }}</div>
             <div class="font-semibold">Total Employees: {{ employeesCount }}</div>
             <div class="flex flex-col gap-4">
-                <h2>
-                    <span class="font-semibold">Companies</span>
-                    <span class="text-sm text-gray-500 ml-1">(Click a company name to view details)</span>
-                </h2>
+                <div class="flex justify-between items-center gap-4">
+                    <h2>
+                        <span class="font-semibold">Companies</span>
+                        <span class="text-sm text-gray-500 ml-1">(Click a company name to view details)</span>
+                    </h2>
+                    <!-- TODO: link to create company page -->
+                    <button 
+                        class="border border-[currentColor] rounded-lg px-4 py-2 text-sm cursor-pointer hover:text-gray-500 dark:hover:text-gray-400"
+                        @click="() => {}"
+                    >
+                        Create New
+                    </button>
+                </div>
                 <div class="flex flex-col gap-2 items-start">
                     <!-- TODO: Add link to company details page -->
                     <Link
-                        v-for="company in companies"
+                        v-for="company in companies.data"
                         :key="company.id"
                         :href="''"
                         class="text-sm hover:underline"

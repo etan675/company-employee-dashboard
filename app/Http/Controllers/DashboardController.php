@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CompanyResource;
 use App\Services\Interfaces\CompanyServiceInterface;
 use App\Services\Interfaces\EmployeeServiceInterface;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard', [
             'companiesCount' => $companiesCount,
             'employeesCount' => $employeesCount,
-            'companies' => $companies
+            'companies' => CompanyResource::collection($companies)
         ]);
     }
 }
