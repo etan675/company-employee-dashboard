@@ -54,10 +54,10 @@ const breadcrumbs: BreadcrumbItem[] = [
             </div>
             <div class="flex flex-col gap-4 items-start">
                 <h2>
-                    <span class="font-semibold">Employees</span>
+                    <span class="font-semibold">Current Employees List</span>
                     <span class="text-sm text-gray-500 ml-1">(Click an employee name to view details)</span>
                 </h2>
-                <Link 
+                <Link
                     :href="`/companies/${company.id}/employees/new`"
                     class="bg-blue-500 text-white px-4 py-2 text-sm rounded-lg hover:bg-blue-600"
                 >
