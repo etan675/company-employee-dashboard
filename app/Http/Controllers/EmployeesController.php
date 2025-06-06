@@ -45,4 +45,29 @@ class EmployeesController extends Controller
             'company' => new CompanyResource($company)
         ]);
     }
+
+    public function store(Request $request, string $companyId)
+    {
+        $validatedData = $request->validate([
+            'firstName' => ['required', 'string'],
+            'lastName' => ['required', 'string'],
+            'email' => ['required', 'email', 'unique:employees,email'],
+            'address' => ['nullable', 'string'],
+        ]);
+
+        // map to model fields
+        $employeeData = [
+            'first_name' => $validatedData['firstName'],
+            'last_name' => $validatedData['lastName'],
+            'email' => $validatedData['email'],
+            'address' => $validatedData['address'],
+        ];
+
+        $employee = $this->employeeService->createEmployee($employeeData, (int) $companyId);
+
+        return redirect()->route('employees.show', [
+            'companyId' => $companyId,
+            'employeeId' => $employee->id
+        ]);
+    }
 }

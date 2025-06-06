@@ -19,4 +19,14 @@ interface EmployeeServiceInterface
      * @return \App\Models\Employee|null
      */
     public function getEmployeeById(int $id);
+
+    /**
+     * Create an employee in a company.
+     * 
+     * @param array $fields
+     * @param int $companyId
+     * 
+     * @return \App\Models\Employee|null
+     */
+    public function createEmployee(array $fields, int $companyId);
 }

@@ -52,4 +52,24 @@ class EmployeesControllerTest extends TestCase
                 });
         });
     }
+
+    public function test_store_valid_record_redirects_to_employee_details()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $company = Company::factory()->create();
+
+        $requestData = [
+            'firstName' => 'john',
+            'lastName' => 'smith',
+            'email' => 'john@test.com',
+            'address' => '123 test street',
+        ];
+
+        $response = $this->post("/companies/{$company->id}/employees", $requestData);
+
+        $response->assertStatus(302);
+        $response->assertRedirect("/companies/{$company->id}/employees/1");
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Employee;
 use App\Services\Interfaces\EmployeeServiceInterface;
+use Exception;
 
 class EmployeeService implements EmployeeServiceInterface
 {
@@ -27,5 +28,23 @@ class EmployeeService implements EmployeeServiceInterface
     public function getEmployeeById(int $id)
     {
         return Employee::find($id);
+    }
+
+    /**
+     * Create an employee in a company.
+     * 
+     * @param array $fields
+     * @param int $companyId
+     * 
+     * @return \App\Models\Employee|null
+     */
+    public function createEmployee(array $fields, int $companyId)
+    {
+        try {
+            $fields['company_id'] = $companyId;
+            return Employee::create($fields);
+        } catch (Exception $e) {
+            return null;
+        }
     }
 }

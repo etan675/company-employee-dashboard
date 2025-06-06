@@ -44,7 +44,10 @@ const breadcrumbs: BreadcrumbItem[] = [
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex flex-col items-start gap-4 p-8">
             <h1 class="text-2xl font-bold mb-6">Create Employee</h1>
-            <form @submit.prevent="form.post('/companies')" class="flex flex-col gap-4">
+            <form 
+                @submit.prevent="form.post(`/companies/${company.id}/employees`)" 
+                class="flex flex-col gap-4"
+            >
                 <div class="flex flex-col gap-2">
                     <Label for="firstName">First Name</Label>
                     <Input
