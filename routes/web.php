@@ -14,12 +14,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('companies/new', [CompaniesController::class, 'create'])->name('companies.create');
     Route::post('companies', [CompaniesController::class, 'store'])->name('companies.store');
-    
     Route::get('companies/{id}', [CompaniesController::class, 'show'])->name('companies.show');
     Route::get('companies/{id}/edit', [CompaniesController::class, 'edit'])->name('companies.edit');
     Route::patch('companies/{id}', [CompaniesController::class, 'update'])->name('companies.update');
 
-    Route::get('companies/{companyId}/employees/{employeeId}', [EmployeesController::class, 'show'], 'employees.show');
+    Route::get('companies/{companyId}/employees/new', [EmployeesController::class, 'create'])->name('employees.create');
+    Route::get('companies/{companyId}/employees/{employeeId}', [EmployeesController::class, 'show'])->name('employees.show');
 });
 
 require __DIR__.'/settings.php';

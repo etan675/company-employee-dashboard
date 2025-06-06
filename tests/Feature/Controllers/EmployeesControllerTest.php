@@ -15,7 +15,7 @@ class EmployeesControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_employees_details_page()
+    public function test_employees_details_page_gets_employees_and_company_data()
     {
         $user = User::factory()->create();
         $this->actingAs($user);
@@ -30,6 +30,23 @@ class EmployeesControllerTest extends TestCase
                 ->has('employee', null, function (AssertableJson $employee) {
                     $employee->hasAll(['id', 'firstName', 'lastName', 'email', 'address', 'companyId']);
                 })
+                ->has('company', null, function (AssertableJson $company) {
+                    $company->hasAll(['id', 'name'])->etc();
+                });
+        });
+    }
+
+    public function test_create_employee_page()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        Company::factory()->create();
+
+        $response = $this->get('companies/1/employees/new');
+        $response->assertStatus(200);
+        $response->assertInertia(function (AssertableInertia $page) {
+            $page->component('CreateEmployee')
                 ->has('company', null, function (AssertableJson $company) {
                     $company->hasAll(['id', 'name'])->etc();
                 });
