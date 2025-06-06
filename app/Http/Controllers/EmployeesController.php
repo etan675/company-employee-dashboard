@@ -70,4 +70,17 @@ class EmployeesController extends Controller
             'employeeId' => $employee->id
         ]);
     }
+
+    public function destroy(string $companyId, string $employeeId)
+    {
+        $deletedId = $this->employeeService->deleteEmployee($employeeId, $companyId);
+
+        if (!$deletedId) {
+            return redirect()
+                ->route('companies.show', ['id' => $companyId])
+                ->with('error', 'specified employee not found in company');
+        }
+
+        return redirect()->route('companies.show', ['id' => $companyId]);
+    }
 }

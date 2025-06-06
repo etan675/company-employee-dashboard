@@ -29,4 +29,14 @@ interface EmployeeServiceInterface
      * @return \App\Models\Employee|null
      */
     public function createEmployee(array $fields, int $companyId);
+
+     /**
+     * Delete an employee in a company.
+     * 
+     * @param int $employeeId
+     * @param int $companyId
+     * 
+     * @return int
+     */
+    public function deleteEmployee(int $employeeId, int $companyId);
 }

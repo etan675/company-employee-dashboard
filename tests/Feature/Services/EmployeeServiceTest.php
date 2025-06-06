@@ -30,7 +30,7 @@ class EmployeeServiceTest extends TestCase
         $this->assertEquals($employee->email, $fetched->email);
     }
 
-    public function test_create_company_inserts_to_database_correctly()
+    public function test_create_employee_inserts_to_database_correctly()
     {
         $company = Company::factory()->create();
         $newEmployeeData = [
@@ -52,5 +52,32 @@ class EmployeeServiceTest extends TestCase
             'company_id' =>$company->id
         ]);
         $this->assertEquals($created2, null, 'failed insert should return null');
+    }
+
+    public function test_delete_employee_deletes_record_from_database_correctly()
+    {
+        $company = Company::factory()->create();
+        $employee = Employee::factory()->create(['company_id' => $company->id]);
+
+        $deletedId = $this->employeeService->deleteEmployee($employee->id, $company->id);
+
+        $this->assertEquals($employee->id, $deletedId, 'returned id should match deleted id');
+        $this->assertDatabaseMissing('employees', [
+            'id' => $employee->id
+        ]);
+    }
+
+    public function test_deleting_employee_not_found_in_company_fails()
+    {
+        $company1 = Company::factory()->create();
+        $company2 = Company::factory()->create();
+        $employee = Employee::factory()->create(['company_id' => $company2]);
+
+        $deletedId = $this->employeeService->deleteEmployee($employee->id, $company1->id);
+
+        $this->assertEquals(0, $deletedId, 'failed delete should return 0');
+        $this->assertDatabaseHas('employees', [
+            'id' => $employee->id
+        ]);
     }
 }

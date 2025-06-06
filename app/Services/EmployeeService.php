@@ -47,4 +47,24 @@ class EmployeeService implements EmployeeServiceInterface
             return null;
         }
     }
+
+    /**
+     * Delete an employee in a company.
+     * 
+     * @param int $employeeId
+     * @param int $companyId
+     * 
+     * @return int
+     */
+    public function deleteEmployee(int $employeeId, int $companyId)
+    {
+        $employee = $this->getEmployeeById((int) $employeeId);
+
+        $success = false;
+        if ($employee && $employee->company_id === (int) $companyId) {
+            $success = $employee->delete();
+        }
+
+        return $success ? $employeeId : 0;
+    }
 }

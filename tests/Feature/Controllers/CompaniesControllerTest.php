@@ -103,7 +103,7 @@ class CompaniesControllerTest extends TestCase
 
         $company = Company::factory()->create();
 
-        $response = $this->get('/companies/1/edit');
+        $response = $this->get(route('companies.edit', ['id' => $company->id]));
         $response->assertStatus(200);
 
         $response->assertInertia(fn (AssertableInertia $page) =>
@@ -119,7 +119,7 @@ class CompaniesControllerTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        Company::factory()->create(['name' => 'company 1']);
+        $company = Company::factory()->create(['name' => 'company 1']);
 
         $requestData = [
             'name' => 'test company 1'
@@ -133,7 +133,7 @@ class CompaniesControllerTest extends TestCase
                 ]));
         });
 
-        $response = $this->patch('/companies/1', $requestData);
+        $response = $this->patch(route('companies.update', ['id' => $company->id]), $requestData);
         $response->assertStatus(302);
         $response->assertRedirect('/companies/1');
     }

@@ -13,13 +13,12 @@ const props = defineProps<{
         data: Company
     }
 }>();
-const company = props.company.data;
 
 const form = useForm({
-    name: company.name || '',
-    abn: company.abn || '',
-    email: company.email || '',
-    address: company.address || '',
+    name: props.company.data.name || '',
+    abn: props.company.data.abn || '',
+    email: props.company.data.email || '',
+    address: props.company.data.address || '',
 });
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -28,12 +27,12 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/dashboard',
     },
     {
-        title: company.name,
-        href: `/companies/${company.id}`
+        title: props.company.data.name,
+        href: `/companies/${props.company.data.id}`
     },
     {
         title: 'Edit',
-        href: `/companies/${company.id}/edit`
+        href: `/companies/${props.company.data.id}/edit`
     },
 ];
 </script>
@@ -43,7 +42,10 @@ const breadcrumbs: BreadcrumbItem[] = [
     <AppLayout :breadcrumbs="breadcrumbs">
          <div class="flex flex-col items-start gap-4 p-8">
             <h1 class="text-2xl font-bold mb-6">Edit Company</h1>
-            <form @submit.prevent="form.patch(`/companies/${company.id}`)" class="flex flex-col gap-4">
+            <form 
+                @submit.prevent="form.patch(`/companies/${props.company.data.id}`)" 
+                class="flex flex-col gap-4"
+            >
                 <div class="flex flex-col gap-2">
                     <Label for="name">Name</Label>
                     <Input

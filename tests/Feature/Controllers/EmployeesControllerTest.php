@@ -67,9 +67,25 @@ class EmployeesControllerTest extends TestCase
             'address' => '123 test street',
         ];
 
-        $response = $this->post("/companies/{$company->id}/employees", $requestData);
+        $response = $this->post(route('employees.store', ['companyId' => $company->id]), $requestData);
 
         $response->assertStatus(302);
         $response->assertRedirect("/companies/{$company->id}/employees/1");
+    }
+
+    public function test_delete_employee_redirects_to_company_details()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $company = Company::factory()->has(Employee::factory())->create();
+
+        $response = $this->delete(route('employees.destroy', [
+            'companyId' => $company->id,
+            'employeeId' => 1
+        ]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('companies.show', ['id' => $company->id]));
     }
 }

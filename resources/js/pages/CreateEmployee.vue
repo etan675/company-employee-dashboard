@@ -13,7 +13,6 @@ const props = defineProps<{
         data: Company
     }
 }>();
-const company = props.company.data;
 
 const form = useForm({
     firstName: '',
@@ -28,12 +27,12 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/dashboard',
     },
     {
-        title: company.name,
-        href: '/companies/' + company.id,
+        title: props.company.data.name,
+        href: '/companies/' + props.company.data.id,
     },
     {
         title: 'Create Employee',
-        href: 'companies/' + company.id + '/employees/new',
+        href: 'companies/' + props.company.data.id + '/employees/new',
     }
 ];
 
@@ -45,7 +44,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         <div class="flex flex-col items-start gap-4 p-8">
             <h1 class="text-2xl font-bold mb-6">Create Employee</h1>
             <form 
-                @submit.prevent="form.post(`/companies/${company.id}/employees`)" 
+                @submit.prevent="form.post(`/companies/${props.company.data.id}/employees`)" 
                 class="flex flex-col gap-4"
             >
                 <div class="flex flex-col gap-2">
