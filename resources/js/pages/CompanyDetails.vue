@@ -46,7 +46,7 @@ const breadcrumbs: BreadcrumbItem[] = [
             </div>
             <div>
                 <span class="font-semibold">Email:</span>
-                <span class="ml-2">{{ company.name }}</span>
+                <span class="ml-2">{{ company.email }}</span>
             </div>
             <div>
                 <span class="font-semibold">Address:</span>
@@ -67,7 +67,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <Link
                         v-for="employee in company.employees"
                         :key="employee.id"
-                        :href="``"
+                        :href="`/companies/${company.id}/employees/${employee.id}`"
                         class="text-sm hover:underline"
                     >
                         {{ employee.firstName }} {{ employee.lastName }} ({{ employee.email }})

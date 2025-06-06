@@ -16,4 +16,16 @@ class EmployeeService implements EmployeeServiceInterface
     {
         return Employee::count();
     }
+    
+    /**
+     * Get an employee by Id.
+     * 
+     * @param int $id
+     * 
+     * @return \App\Models\Employee|null
+     */
+    public function getEmployeeById(int $id)
+    {
+        return Employee::find($id);
+    }
 }

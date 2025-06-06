@@ -10,4 +10,13 @@ interface EmployeeServiceInterface
      * @return int
      */
     public function getTotalEmployeesCount();
+
+    /**
+     * Get an employee by Id.
+     * 
+     * @param int $id
+     * 
+     * @return \App\Models\Employee|null
+     */
+    public function getEmployeeById(int $id);
 }

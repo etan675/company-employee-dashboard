@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,6 +18,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('companies/{id}', [CompaniesController::class, 'show'])->name('companies.show');
     Route::get('companies/{id}/edit', [CompaniesController::class, 'edit'])->name('companies.edit');
     Route::patch('companies/{id}', [CompaniesController::class, 'update'])->name('companies.update');
+
+    Route::get('companies/{companyId}/employees/{employeeId}', [EmployeesController::class, 'show'], 'employees.show');
 });
 
 require __DIR__.'/settings.php';
