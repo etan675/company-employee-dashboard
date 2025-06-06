@@ -36,4 +36,13 @@ class EmployeesController extends Controller
             'company' => new CompanyResource($company)
         ]);
     }
+
+    public function create(string $companyId)
+    {
+        $company = $this->companyService->getCompanyById((int) $companyId);
+
+        return Inertia::render('CreateEmployee', [
+            'company' => new CompanyResource($company)
+        ]);
+    }
 }
