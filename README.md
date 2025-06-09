@@ -1,6 +1,6 @@
-# Company Employee Dashboard
+# AdminFLow - Company Dashboard
 
-An application for managing companies and their employees.
+An application for managing companies and employees.
 
 ## Tech Stack
 
