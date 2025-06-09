@@ -2,6 +2,8 @@
 
 An application for managing companies and employees.
 
+<img src="https://github.com/user-attachments/assets/6f048e9e-9fc6-42ea-974a-faddf4757a74" width="60%" />
+
 ## Tech Stack
 
 - [Laravel 12](https://laravel.com/)
